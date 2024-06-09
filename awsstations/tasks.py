@@ -45,6 +45,11 @@ def save_station_data(station, data):
     temperature = data.get('temp_out', 0)
     humidity = data.get('out_humidity', 0)
     wind_speed = data.get('wind_speed', 0)
+
+    station.current_rainfall = rainfall
+    station.current_temp = temperature
+    station.current_windspeed = wind_speed
+    station.save()
     
     StationData.objects.create(
         station=station,
