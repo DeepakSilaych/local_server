@@ -4,6 +4,8 @@ from .models import AWSStation, StationData, TrainStation
 from .serializers import AWSStationSerializer, StationDataSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
+import pandas as pd
+
 
 def get_predictions(request):
     # predict_hourly()
@@ -33,3 +35,9 @@ class StationDetailView(APIView):
         station_data = StationDataSerializer(station_data, many=True)
         
         return Response({'station': serializer.data, 'data': station_data.data})
+    
+class Savedataincsv(APIView):
+    def get(self, request):
+        data = StationData.objects.all()
+        pd = pd.DataFrame(data)
+        pd.to_csv('data.csv')
