@@ -2,9 +2,6 @@
 # Create your views here.
 from .models import AWSStation, StationData, TrainStation
 from .serializers import AWSStationSerializer, StationDataSerializer
-# from .utils.daily_prediction import predict_day1, predict_day2, predict_day3
-# from .utils.hourly_prediction import predict_hourly
-# from .utils.gfs import download_gfs_data
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
@@ -36,8 +33,3 @@ class StationDetailView(APIView):
         station_data = StationDataSerializer(station_data, many=True)
         
         return Response({'station': serializer.data, 'data': station_data.data})
-    
-def create_station(request):
-    stations = AWSStation.objects.all()
-    for station in stations:
-        print(station.station_id)
