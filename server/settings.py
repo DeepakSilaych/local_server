@@ -30,10 +30,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
-    'weatherstations',
     'awsstations',
-    'crowdsource',
-    'blogs',
     
     'rest_framework',
     'django_celery_beat',
