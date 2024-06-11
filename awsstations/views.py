@@ -75,8 +75,8 @@ class StationDetailView(APIView):
 class TestView(APIView):
     def get(self, request):
         download_gfs_data()
-        dailyprediction()
         predict_hourly()
+        dailyprediction()
         return Response({
             'status': 'done'
         })
