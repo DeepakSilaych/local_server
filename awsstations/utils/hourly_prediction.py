@@ -3,7 +3,6 @@ import numpy as np
 import pywt
 import tensorflow as tf
 from tensorflow.keras.models import load_model
-import matplotlib.pyplot as plt
 from django.conf import settings
 import os
 from awsstations.models import StationData, AWSStation, HourlyPrediction
