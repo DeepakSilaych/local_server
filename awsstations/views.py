@@ -71,3 +71,12 @@ class StationDetailView(APIView):
             'daily_data': updated_daily_data,
         })
 
+
+class TestView(APIView):
+    def get(self, request):
+        download_gfs_data()
+        dailyprediction()
+        predict_hourly()
+        return Response({
+            'status': 'done'
+        })
