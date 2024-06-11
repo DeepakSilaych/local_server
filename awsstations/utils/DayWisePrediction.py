@@ -5,11 +5,7 @@ from datetime import timedelta
 import os
 import datetime as dt
 import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.lines import Line2D
-from matplotlib.ticker import MaxNLocator 
 import pickle
-import matplotlib.dates as mdates
 from tensorflow.keras.models import Sequential, load_model
 import copy
 
