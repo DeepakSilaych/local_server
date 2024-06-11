@@ -50,7 +50,7 @@ def save_station_data(station, data):
     humidity = data.get('out_humidity', 0)
     wind_speed = data.get('wind_speed', 0)
 
-    station.curr_rainfall = rainfall
+    station.curr_rainfall = sum(StationData.objects.filter(station=station).order_by('-timestamp').values_list('rainfall', flat=True)[:3]) + rainfall
     station.curr_temp = temperature
     station.curr_windspeed = wind_speed
     station.save()
