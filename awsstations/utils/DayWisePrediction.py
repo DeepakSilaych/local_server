@@ -448,6 +448,8 @@ def dailyprediction():
         Day3 = Df['Final'].iloc[0]
 
         DaywisePrediction.objects.create(station=station, day1_rainfall=day1, day2_rainfall=day2, day3_rainfall=Day3)
+        station.rainfall = day1
+        station.save()
 
 
 
