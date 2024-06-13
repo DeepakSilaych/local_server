@@ -4,8 +4,8 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('stations/', views.StationListView.as_view()),
-    path('stations/<int:station_id>/', views.StationDetailView.as_view()),
-    path('train/', views.TrainStationListView.as_view()),
-    path('test/', views.TestView.as_view()),
+    path('check/', views.CheckView.as_view()),
+    path('gfs/', views.GFSDataView.as_view()),
+    path('hourly/', views.HourlyPredictionView.as_view()),
+    path('daily/', views.DailyPredictionView.as_view()),
 ]
