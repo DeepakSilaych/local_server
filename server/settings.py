@@ -77,7 +77,7 @@ DATABASES = {
         'NAME': 'climatedb',
         'USER': 'climate',
         'PASSWORD': 'HDFCERGOweb2023',
-        'HOST': '194.238.18.228',
+        'HOST': 'mumbaiflood.in',
         'PORT': '5432',
     }
 }
