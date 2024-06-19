@@ -128,12 +128,12 @@ CELERY_BEAT_SCHEDULE = {
     },
     'every-hour': {
         'task': 'awsstations.tasks.scheduled_hourly',
-        'schedule': crontab(minute=5),
+        'schedule': crontab(minute='5'),
     },
     
     'everyday-4:55': {
         'task': 'awsstations.tasks.scheduled_daily',
-        'schedule': crontab(hour=16, minute=55),
+        'schedule': crontab(hour='16', minute='55'),
     }
 
 }
