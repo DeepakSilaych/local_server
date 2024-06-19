@@ -28,6 +28,7 @@ def scheduled_daily():
     dailyprediction()
     logger.info("++++++++++++++++++++++++Daily Prediction Done")
 
+@shared_task
 def scheduled_hourly():
     predict_hourly()
     logger.info("************************Hourly Prediction Done")
