@@ -11,9 +11,20 @@ import pandas as pd
 from .utils.DayWisePrediction import dailyprediction
 from .utils.gfs import download_gfs_data
 from .utils.hourly_prediction import predict_hourly
+import os
 
 class CheckView(APIView):
     def get(self, request):
+        stations = AWSStation.objects.all()
+        for station in stations:
+            
+            # fetch 15min interval data for last 24 hours
+            stationdata = StationData.objects.filter(station=station, timestamp__gte=now()-timedelta(days=1)).values('timestamp').annotate(rainfall=Sum('rainfall')).order_by('timestamp')
+            stationdata = pd.DataFrame(stationdata)
+
+            #save in puja folder
+            os.makedirs('puja', exist_ok=True)
+            stationdata.to_csv(f'puja/{station.name}.csv', index=False)
         return Response({
             'status': 'done'
         })
