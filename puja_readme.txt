@@ -11,6 +11,9 @@ command: pip install -r reqirements.txt
 command: python manage.py runserver
 
 to download: http://localhost:8000/check
+data will be saved in /puja/
+(if want to update code, check /awsstations/views.py )
+
 to gfs: http://localhost:8000/gfs
 to hourly: http://localhost:8000/hourly
 to daily: http://localhost:8000/daily
