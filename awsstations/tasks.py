@@ -21,29 +21,25 @@ def scheduled_15_min():
     update_trainstations()
     logger.info("-----------------------15 Min Task Done")
     
-
+# free up the memory after function is done to optimize the performance
 @shared_task
 def scheduled_daily():
     download_gfs_data()
     dailyprediction()
     logger.info("++++++++++++++++++++++++Daily Prediction Done")
+    
 
 @shared_task
 def scheduled_hourly():
     predict_hourly()
     logger.info("************************Hourly Prediction Done")
 #---------------------------------------------------------------------------------------------------------------------
-
 def fetch_and_store_data():
     stations = AWSStation.objects.all()
-    for station in stations:
+    for station in stations: 
         data = fetch_aws_data(station.station_id)
         if data:
             save_station_data(station, data)
-            
-    ist_timezone = pytz.timezone('Asia/Kolkata')
-    current_time_ist = datetime.now(ist_timezone)
-
 
 def save_station_data(station, data):
     rainfall = data.get('rain', 0)
