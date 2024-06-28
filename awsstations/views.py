@@ -11,6 +11,7 @@ import pandas as pd
 from .utils.DayWisePrediction import dailyprediction
 from .utils.gfs import download_gfs_data
 from .utils.hourly_prediction import predict_hourly
+from .tasks import scheduled_15_min, scheduled_hourly, scheduled_daily, update_trainstations
 import os
 
 class CheckView(APIView):
@@ -19,7 +20,7 @@ class CheckView(APIView):
         for station in stations:
             
             # fetch 15min interval data for last 24 hours
-            stationdata = StationData.objects.filter(station=station, timestamp__gte=now()-timedelta(days=1)).values('timestamp').annotate(rainfall=Sum('rainfall')).order_by('timestamp')
+            stationdata = StationData.objects.filter(station=station, timestamp__gte=now()-timedelta(days=5)).values('timestamp').annotate(rainfall=Sum('rainfall')).order_by('timestamp')
             stationdata = pd.DataFrame(stationdata)
 
             #save in puja folder
@@ -28,6 +29,14 @@ class CheckView(APIView):
         return Response({
             'status': 'done'
         })
+    
+class Train(APIView):
+    def get(self, request):
+        update_trainstations()
+        return Response({
+            'status': 'done'
+        })
+
 
 class GFSDataView(APIView):
     def get(self, request):

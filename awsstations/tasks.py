@@ -64,5 +64,15 @@ def save_station_data(station, data):
 def update_trainstations():
     all_stations = TrainStation.objects.all()
     for station in all_stations:
-        station.update()
+        last_data = StationData.objects.filter(station=station.neareststation).order_by('-timestamp')[:4]
+        if last_data:
+            max_rainfall = max(data.rainfall for data in last_data)
+            if max_rainfall > 20:
+                station.WarningLevel = 3
+            elif max_rainfall > 15:
+                station.WarningLevel = 2
+            elif max_rainfall > 10:
+                station.WarningLevel = 1
+            else:
+                station.WarningLevel = 0
            
