@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     'awsstations',
+    'crowdsource',
     
     'rest_framework',
     'django_celery_beat',
@@ -126,10 +127,10 @@ CELERY_BEAT_SCHEDULE = {
         'task': 'awsstations.tasks.scheduled_15_min',
         'schedule': crontab(minute='0,15,30,45'),
     },
-    'every-hour': {
-        'task': 'awsstations.tasks.scheduled_hourly',
-        'schedule': crontab(minute='5'),
-    },
+    # 'every-hour': {
+    #     'task': 'awsstations.tasks.scheduled_hourly',
+    #     'schedule': crontab(minute='5'),
+    # },
     
     'everyday-4:55': {
         'task': 'awsstations.tasks.scheduled_daily',
