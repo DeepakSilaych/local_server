@@ -11,6 +11,8 @@ command: pip install -r reqirements.txt
 command: python manage.py runserver
 
 to download: http://localhost:8000/check
+
 data will be saved in /puja/
+
 (if want to update code, check /awsstations/views.py )
 

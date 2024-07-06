@@ -6,8 +6,6 @@ class AWSStation(models.Model):
     latitude = models.FloatField(blank=True, null=True)
     longitude = models.FloatField(blank=True, null=True)
     rainfall = models.FloatField(default=0)
-    curr_temp = models.FloatField(default=0)
-    curr_windspeed = models.FloatField(default=0)
 
     def __str__(self):
         return self.name
@@ -16,10 +14,7 @@ class AWSStation(models.Model):
 class StationData(models.Model):
     station = models.ForeignKey(AWSStation, on_delete=models.CASCADE)
     rainfall = models.FloatField(default=0)
-    temperature = models.FloatField(default=0)
-    humidity = models.FloatField(default=0)
-    wind_speed = models.FloatField(default=0)
-    timestamp = models.DateTimeField()
+    timestamp = models.DateTimeField(null=True)
     
     def __str__(self):
         return self.station.name + " " + str(self.timestamp)
@@ -27,7 +22,7 @@ class StationData(models.Model):
 
 class DaywisePrediction(models.Model):
     station = models.ForeignKey(AWSStation, on_delete=models.CASCADE, blank=True, null=True)
-    timestamp = models.DateTimeField(auto_now_add=True, null=True)
+    timestamp = models.DateTimeField( null=True)
     day1_rainfall = models.FloatField(default=0)
     day2_rainfall = models.FloatField(default=0)
     day3_rainfall = models.FloatField(default=0)

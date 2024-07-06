@@ -35,4 +35,3 @@ def get_tweets():
 
     return all_tweets
 
-tweets = get_tweets()

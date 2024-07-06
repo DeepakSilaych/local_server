@@ -23,18 +23,10 @@ def dwt_decomposition(data, wavelet='db7', level=3):
 
 def predict_hourly():
     now = pd.Timestamp.now(tz='Asia/Kolkata')
-    res = {}
+
     # Define parameters
     n_steps_in = 3
-    n_steps_out = 1
     num_hours = 24
-    all_correlations = []
-
-    # Prepare to store results
-    correlations_all_stations_A3 = {}
-    predictions_all_stations_A3 = {}
-    correlations_all_stations_D3 = {}
-    predictions_all_stations_D3 = {}
 
     # Loop through each station
     for station in AWSStation.objects.all():
@@ -57,9 +49,7 @@ def predict_hourly():
     
         for i in range(n_samples):
             X_test[i] = values[i:i + n_steps_in]
-            # y[i] = values[i + n_steps_in:i + n_steps_in + n_steps_out]
     
-        # y_train, y_test = y[:train_size], y[train_size:]
     
         # Apply DWT to each sample
         X_test_A3 = np.zeros_like(X_test)
@@ -104,9 +94,7 @@ def predict_hourly():
             y_predicted_next_hour_A3 = network_A3.predict(X_test_new_reshaped_A3)
             appended_data_A3 = np.concatenate((appended_data_A3, y_predicted_next_hour_A3), axis=1)
             predictions_all_hours_A3.append(y_predicted_next_hour_A3)
-    
-        predictions_all_hours_array_A3 = np.array(predictions_all_hours_A3)
-        # predictions_all_stations_A3[station.name] = predictions_all_hours_array_A3
+
 
         # Predict for multiple hours for D3
         predictions_all_hours_D3 = []
@@ -135,7 +123,6 @@ def predict_hourly():
         predictions_all_hours_array_D3 = np.array(predictions_all_hours_D3)
         
 
-        correlations = []
         for hour in range(num_hours):
             cA3_pred = predictions_all_hours_A3[hour].flatten()
             cD3_pred = predictions_all_hours_D3[hour].flatten()
@@ -144,6 +131,3 @@ def predict_hourly():
             temp [str(now + pd.Timedelta(hours=hour+1))] = cDoverall_pred.tolist()[0]
     
         HourlyPrediction.objects.create(station=station, hr_24_rainfall=temp)
-        res[station.name] = temp
-
-    return res
