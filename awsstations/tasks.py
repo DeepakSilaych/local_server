@@ -11,6 +11,9 @@ from .utils.gfs import download_gfs_data
 from .utils.hourly_prediction import predict_hourly
 from .utils.DayWisePrediction import dailyprediction
 
+import pandas as pd
+from datetime import timedelta
+
 
 
 logger = logging.getLogger(__name__)
@@ -64,9 +67,11 @@ def save_station_data(station, data):
 def update_trainstations():
     all_stations = TrainStation.objects.all()
     for station in all_stations:
-        last_data = StationData.objects.filter(station=station.neareststation).order_by('-timestamp')[:4]
+        print(station.station_name , "-----------------------------------------------")
+        last_data = StationData.objects.filter(station=station.neareststation, timestamp__gte=datetime.now(pytz.utc) - timedelta(hours=10)).order_by('timestamp')
         if last_data:
             max_rainfall = max(data.rainfall for data in last_data)
+            print(max_rainfall)
             if max_rainfall > 20:
                 station.WarningLevel = 3
             elif max_rainfall > 15:
@@ -75,4 +80,5 @@ def update_trainstations():
                 station.WarningLevel = 1
             else:
                 station.WarningLevel = 0
-           
+            station.save()
+            print(station.WarningLevel)

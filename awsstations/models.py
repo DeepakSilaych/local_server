@@ -14,7 +14,7 @@ class AWSStation(models.Model):
 class StationData(models.Model):
     station = models.ForeignKey(AWSStation, on_delete=models.CASCADE)
     rainfall = models.FloatField(default=0)
-    timestamp = models.DateTimeField(null=True)
+    timestamp = models.DateTimeField()
     
     def __str__(self):
         return self.station.name + " " + str(self.timestamp)
@@ -22,7 +22,7 @@ class StationData(models.Model):
 
 class DaywisePrediction(models.Model):
     station = models.ForeignKey(AWSStation, on_delete=models.CASCADE, blank=True, null=True)
-    timestamp = models.DateTimeField( null=True)
+    timestamp = models.DateTimeField(null=True)
     day1_rainfall = models.FloatField(default=0)
     day2_rainfall = models.FloatField(default=0)
     day3_rainfall = models.FloatField(default=0)
